@@ -66,19 +66,15 @@ with ui.value_box("Penguin Count", showcase=icon_svg("earlybirds")):
     def count():
         return filtered_df().shape[0]
 
-    with ui.value_box(showcase=icon_svg("ruler-horizontal")):
-        "Average bill length"
+with ui.value_box("Avg Bill Length", showcase=icon_svg("ruler-horizontal")):
+    @render.text
+    def bill_length():
+        return f"{filtered_df()['bill_length_mm'].mean():.1f} mm"
 
-        @render.text
-        def bill_length():
-            return f"{filtered_df()['bill_length_mm'].mean():.1f} mm"
-
-    with ui.value_box(showcase=icon_svg("ruler-vertical")):
-        "Average bill depth"
-
-        @render.text
-        def bill_depth():
-            return f"{filtered_df()['bill_depth_mm'].mean():.1f} mm"
+with ui.value_box("Avg Bill Depth", showcase=icon_svg("ruler-vertical")):
+    @render.text
+    def bill_depth():
+        return f"{filtered_df()['bill_depth_mm'].mean():.1f} mm"
 
 # ------------------------------
 # Main Plots and Data Table
