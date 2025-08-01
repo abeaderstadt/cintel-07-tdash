@@ -1,3 +1,6 @@
+# ------------------------------
+# Imports
+# ------------------------------
 import seaborn as sns
 from faicons import icon_svg
 
@@ -5,11 +8,19 @@ from shiny import reactive
 from shiny.express import input, render, ui
 import palmerpenguins 
 
+# ------------------------------
+# Load Data
+# ------------------------------
 df = palmerpenguins.load_penguins()
 
+# ------------------------------
+# Page Options
+# ------------------------------
 ui.page_opts(title="Penguins dashboard", fillable=True)
 
-
+# ------------------------------
+# Sidebar Controls
+# ------------------------------
 with ui.sidebar(title="Filter controls"):
     ui.input_slider("mass", "Mass", 2000, 6000, 6000)
     ui.input_checkbox_group(
@@ -47,7 +58,9 @@ with ui.sidebar(title="Filter controls"):
         target="_blank",
     )
 
-
+# ------------------------------
+# Value Boxes
+# ------------------------------
 with ui.layout_column_wrap(fill=False):
     with ui.value_box(showcase=icon_svg("earlybirds")):
         "Number of penguins"
@@ -70,7 +83,9 @@ with ui.layout_column_wrap(fill=False):
         def bill_depth():
             return f"{filtered_df()['bill_depth_mm'].mean():.1f} mm"
 
-
+# ------------------------------
+# Main Plots and Data Table
+# ------------------------------
 with ui.layout_columns():
     with ui.card(full_screen=True):
         ui.card_header("Bill length and depth")
@@ -98,12 +113,16 @@ with ui.layout_columns():
             ]
             return render.DataGrid(filtered_df()[cols], filters=True)
 
-
-#ui.include_css(app_dir / "styles.css")
-
-
+# ------------------------------
+# Reactive Calculations
+# ------------------------------
 @reactive.calc
 def filtered_df():
     filt_df = df[df["species"].isin(input.species())]
     filt_df = filt_df.loc[filt_df["body_mass_g"] < input.mass()]
     return filt_df
+
+# ------------------------------
+# Optional Custom Styles
+# ------------------------------
+#ui.include_css(app_dir / "styles.css")
