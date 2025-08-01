@@ -22,10 +22,10 @@ ui.page_opts(title="Penguins dashboard", fillable=True)
 # Sidebar Controls
 # ------------------------------
 with ui.sidebar(title="Filter controls"):
-    ui.input_slider("mass", "Mass", 2000, 6000, 6000)
+    ui.input_slider("mass", "Body Mass (grams)", 2000, 6000, 6000)
     ui.input_checkbox_group(
         "species",
-        "Species",
+        "Select Penguin Species",
         ["Adelie", "Gentoo", "Chinstrap"],
         selected=["Adelie", "Gentoo", "Chinstrap"],
     )
@@ -61,9 +61,10 @@ with ui.sidebar(title="Filter controls"):
 # ------------------------------
 # Value Boxes
 # ------------------------------
-with ui.layout_column_wrap(fill=False):
-    with ui.value_box(showcase=icon_svg("earlybirds")):
-        "Number of penguins"
+with ui.value_box("Penguin Count", showcase=icon_svg("earlybirds")):
+    @render.text
+    def count():
+        return filtered_df().shape[0]
 
         @render.text
         def count():
@@ -88,7 +89,7 @@ with ui.layout_column_wrap(fill=False):
 # ------------------------------
 with ui.layout_columns():
     with ui.card(full_screen=True):
-        ui.card_header("Bill length and depth")
+        ui.card_header("Scatterplot of Bill Length vs. Depth")
 
         @render.plot
         def length_depth():
@@ -104,14 +105,14 @@ with ui.layout_columns():
 
         @render.data_frame
         def summary_statistics():
-            cols = [
-                "species",
-                "island",
-                "bill_length_mm",
-                "bill_depth_mm",
-                "body_mass_g",
-            ]
-            return render.DataGrid(filtered_df()[cols], filters=True)
+            cols = {
+                "species": "Species",
+                "island":  "Island",
+                "bill_length_mm": "Bill Length (mm)",
+                "bill_depth_mm": "Bill Depth (mm)",
+                "body_mass_g": "Body Mass (g)",
+            }
+            return render.DataGrid(filtered_df().rename(columns=cols)[list(cols.values())], filters=True)
 
 # ------------------------------
 # Reactive Calculations
