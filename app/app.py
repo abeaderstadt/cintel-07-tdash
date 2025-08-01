@@ -66,10 +66,6 @@ with ui.value_box("Penguin Count", showcase=icon_svg("earlybirds")):
     def count():
         return filtered_df().shape[0]
 
-        @render.text
-        def count():
-            return filtered_df().shape[0]
-
     with ui.value_box(showcase=icon_svg("ruler-horizontal")):
         "Average bill length"
 
