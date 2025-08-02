@@ -61,17 +61,17 @@ with ui.sidebar(title="Filter controls"):
 # ------------------------------
 # Value Boxes
 # ------------------------------
-with ui.value_box("Penguin Count", showcase=icon_svg("earlybirds")):
+with ui.value_box(title="Penguin Count", showcase=icon_svg("earlybirds")):
     @render.text
     def count():
         return filtered_df().shape[0]
 
-with ui.value_box("Avg Bill Length", showcase=icon_svg("ruler-horizontal")):
+with ui.value_box(title="Avg Bill Length", showcase=icon_svg("ruler-horizontal")):
     @render.text
     def bill_length():
         return f"{filtered_df()['bill_length_mm'].mean():.1f} mm"
 
-with ui.value_box("Avg Bill Depth", showcase=icon_svg("ruler-vertical")):
+with ui.value_box(title="Avg Bill Depth", showcase=icon_svg("ruler-vertical")):
     @render.text
     def bill_depth():
         return f"{filtered_df()['bill_depth_mm'].mean():.1f} mm"
