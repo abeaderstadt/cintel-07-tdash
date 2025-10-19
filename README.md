@@ -1,5 +1,8 @@
 # PyShiny Basic Dashboard (Penguins)
 
+## About
+This project is a fun, interactive dashboard I built using PyShiny to explore the Palmer Penguins dataset. It lets you play around with penguin data and see visualizations come to life in the browser. I built it in VS Code with Python, set it up to run locally, and even got it ready for GitHub Pages so it can be shared online. It was a great way to get hands on experience with building a web based data app and learning how to combine coding, data, and interactive visuals all in one project.
+
 ## Tools
 
 - Python
